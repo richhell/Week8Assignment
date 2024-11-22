@@ -14,8 +14,8 @@ class Book {
 }
 
 class Fiction {
-    constructor(genre){
-       this.genre = genre;
+    constructor(bookOfFiction){
+       this.bookOfFiction = bookOfFiction;
        this.ficbooks = [];
 
     }
@@ -24,22 +24,22 @@ class Fiction {
             this.ficbooks.push(ficbook);
         } else {
             throw new Error(`You can only add an instance of Book. 
-              Argument is not a book: ${book}`);
-    
+              Argument is not a book: ${ficbook}`);
         }
     } 
+    
     describe(){
-        return `${this.ficbook} is a work of fiction.`;
+        return `${this.bookOfFiction} is a work of fiction.`;
     } 
 }
 
 class Nonfiction {
-    constructor(genre){
-        this.genre = genre;
+    constructor(bookOfNonfiction){
+        this.bookOfNonfiction = bookOfNonfiction;
         this.nonficbooks = [];
  
      }
-     addFictionBook(nonficbook){
+     addNonfictionBook(nonficbook){
          if (nonficbook instanceof Book) {
              this.nonficbooks.push(ficbook);
          } else {
@@ -54,12 +54,9 @@ class Nonfiction {
 }
 
 class Menu {
-    constructor() {
-
-    }
 
 
-    start() { // entry point to application
+    start() { // start of the menu application
         let selection = this.showMainMenuOptions(); 
         while (selection != 0) {
         switch(selection) {
@@ -82,47 +79,50 @@ class Menu {
     showMainMenuOptions() {
         return prompt(`
             0) exit
-            1) View Fiction Books
-            2) View Nonfiction Books
+            1) Fiction Books
+            2) Nonfiction Books
             3) View All Books
             `);
             }
 
-    
-    showFiction() {
-
-        let selection1 = this.showfictionMenuOptions();
-        switch (selection1) {
-            case '0' :
-            this.showMainMenuOptions();
-            break;
-            case '1' :
-            this.addFictionBook();
-            break;
-            case '2' :
-            this.deleteFictionBook();
-            break;
-            case '3' :
-                this.viewAllFictionBooks();
-
-        }
-    }
-
-    showFictionMeuOptions() {
+    showFictionMenuOptions() {
         return prompt(`
             0) Back
-            1) Add a new Book
+            1) Add a New Book
             2) Delete a Book
             3) View Books
             -----------------
             FICTION
             `);
-        
-                    
-
+    }
+    showFiction() {
+        let selection1 = this.showFictionMenuOptions();
+        switch (selection1) {
+            case '0' :
+            this.showMainMenuOptions();
+            break;
+            case '1' :
+            this.addFicBook();
+            break;
+            case '2' :
+            this.deleteFicBook();
+            break;
+            case '3' :
+            this.viewFicBooks();
+            break;
+            default:
+            selection1 = 0;
+        }
     }
 
-    viewFictionBooks() {
+    addFicBook() {
+        let title = prompt('Enter the title of the book: ');
+        let author = prompt('Enter the authorof the book: ');
+        let year = prompt('Enter the year the book was published: ')
+        this.ficbooks.addFictionBook(new Book(title, author, year));
+    }
+
+    viewFicBooks() {
         let booksStrings = ''; 
         for (let i = 0; i < this.ficbooks.length; i++) {
         booksStrings += i+ ') ' + this.ficbooks[i] + '\n';
