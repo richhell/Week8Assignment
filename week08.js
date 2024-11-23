@@ -124,6 +124,7 @@ class Menu {
         if (index > -1 && index < this.selectedCollection.books.length) { 
             this.selectedCollection.books.splice(index,1);
     }
+    }
 
     //View all of the books in all of the collections.
     viewAllBooks() {
@@ -139,10 +140,8 @@ class Menu {
         let index = prompt('Enter the index of person whose collection you wish to delete: ');
         if (index > -1 && index < this.teams.length) {
             this.collection.splice(index,1);
+        }
     }
-    
-    }
-   
 }
 
 let menu = new Menu();
