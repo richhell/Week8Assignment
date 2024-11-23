@@ -36,8 +36,8 @@ class Menu {
         this.collection = [];
         this.selectedCollection = null;
         }
-   
-    start() { // start of the menu application 
+   //The start of the menu application
+    start() {  
         let selection = this.showMainMenuOptions(); 
         while (selection != 0) {
         switch(selection) {
@@ -79,7 +79,7 @@ class Menu {
             ${collectionInfo}
             `);
     }
-    
+    //Show all of the names of people who have book collections.
     displayCollections() {
         let collectionString = '';
         for (let i = 0; i < this.collection.length; i++){
@@ -87,12 +87,12 @@ class Menu {
         }
         alert(collectionString);
     }
-
+    //Add the names of people who will have book collections.
     createCollection(){
         let name = prompt(`Enter the name of the person whose book collection you want to add: `); 
         this.collection.push(new Person(name));
     }
-
+    //View a list of the names of the people with book collections.
     viewCollection(){
         let index = prompt("Enter the index of the person's collection that you want to view:");
         if (index > -1 && index < this.collection[index]) {
@@ -101,7 +101,7 @@ class Menu {
             for (let i = 0; i < this.selectedCollection.books.length; i++) {
                 description += i + ') ' + this.selectedCollection.books[i].describeBook() + '\n';
             }
-        
+        //menu for adding and deleting books from a person's collection.
         let selection1 = this.showCollectionMenuOptions(description);
             switch(selection1) {
                 case '1' : 
@@ -113,7 +113,7 @@ class Menu {
             } 
         }
     }
-    //Add a boook to the selected person's collection
+    //Add a boook to the selected person's collection.
     addBook() {
         let title = prompt('Enter the title of the book: ');
         let author = prompt('Enter the name of the author: ');
