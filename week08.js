@@ -7,8 +7,8 @@ class Book {
     }
    
     describeBook(){
-        //Tells you about the book. 
-        return `${title} was written by ${author}.`; 
+        //Displays the the title and author. 
+        return `${title} by ${author}.`; 
    }
 }
 //Define a class to whom the books belong.
@@ -99,7 +99,7 @@ class Menu {
             this.selectedCollection = this.collection[index];
             let description = 'This book collection belongs to: ' + this.selectedCollection.name + '\n ';
             for (let i = 0; i < this.selectedCollection.books.length; i++) {
-                description += i + ') ' + this.selectedCollection.books[i].describe() + '\n';
+                description += i + ') ' + this.selectedCollection.books[i].describeBook() + '\n';
             }
         
         let selection1 = this.showCollectionMenuOptions(description);
@@ -117,7 +117,7 @@ class Menu {
     addBook() {
         let title = prompt('Enter the title of the book: ');
         let author = prompt('Enter the name of the author: ');
-        this.selectedCollection.addaBook(new Book(title, author));
+        this.selectedCollection.books.push(new Book(title, author));
     }
     //Delete a book from the selected person's collection.
     deleteBook() {
