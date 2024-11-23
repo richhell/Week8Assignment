@@ -34,7 +34,7 @@ class Person {
 class Menu {
     constructor() {
         this.collection = [];
-        this.selctedCollection = null;
+        this.selectedCollection = null;
         }
    
     start() { // start of the menu application 
@@ -89,20 +89,20 @@ class Menu {
     }
 
     createCollection(){
-        let name = prompt(`Enter name for new team: `); 
+        let name = prompt(`Enter the name of the person whose book collection you want to add: `); 
         this.collection.push(new Person(name));
     }
 
     viewCollection(){
         let index = prompt("Enter the index of the person's collection that you want to view:");
         if (index > -1 && index < this.collection[index]) {
-            this.selctedCollection = this.collection[index];
-            let description = 'This Collection belongs to: ' + this.selctedCollection.name + '\n ';
-            for (let i = 0; i < this.selctedCollection.books.length; i++) {
-                description += i + ') ' + this.selctedCollection.books[i].describe() + '\n';
+            this.selectedCollection = this.collection[index];
+            let description = 'This Collection belongs to: ' + this.selectedCollection.name + '\n ';
+            for (let i = 0; i < this.selectedCollection.books.length; i++) {
+                description += i + ') ' + this.selectedCollection.books[i].describe() + '\n';
             }
-        }
-        let selection1 = this.showCollectionMenuOptions(collectionInfo);
+        
+        let selection1 = this.showCollectionMenuOptions(description);
             switch(selection1) {
                 case '1' : 
                 this.addBook();
@@ -111,22 +111,23 @@ class Menu {
                 this.deleteBook();
                 break;
             } 
+        }
     }
     //Add a boook to the selected person's collection
     addBook() {
         let title = prompt('Enter the title of the book: ');
         let author = prompt('Enter the name of the author: ');
-        this.selctedCollection(new Book(title, author));
+        this.selectedCollection.addaBook(new Book(title, author));
     }
     //Delete a book from the selected person's collection.
     deleteBook() {
         let index = prompt('Enter the index of the books that you wish to delete: ');
         if (index > -1 && index < this.selectedCollection.books.length) { 
-            this.selectedCollection.books.splice(index,1);
+            this.selectedCollection.books.splice(index, 1);
     }
     }
 
-    //View all of the books in all of the collections.
+    //View all of the people who have book collections.
     viewAllBooks() {
         let booksStrings = ''; 
         for (let i = 0; i < this.books.length; i++) {
@@ -138,7 +139,7 @@ class Menu {
     //Delete a person's book collection. 
     deleteCollection() {
         let index = prompt('Enter the index of person whose collection you wish to delete: ');
-        if (index > -1 && index < this.teams.length) {
+        if (index > -1 && index < this.collection.length) {
             this.collection.splice(index,1);
         }
     }
