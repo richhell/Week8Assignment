@@ -97,7 +97,7 @@ class Menu {
         let index = prompt("Enter the index of the person's collection that you want to view:");
         if (index > -1 && index < this.collection[index]) {
             this.selectedCollection = this.collection[index];
-            let description = ' ' + this.selectedCollection.name + '\n ';
+            let description = ' ' + this.selectedCollection.name + '\'s books. \n ';
             for (let i = 0; i < this.selectedCollection.books.length; i++) {
                 description += i + ') ' + this.selectedCollection.books[i].describeBook() + '\n';
             }
