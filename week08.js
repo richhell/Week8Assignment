@@ -1,74 +1,58 @@
 // Week 8 Assignment
-// Define a class for books that includes the title, author name, and the year it was published
+// Define a class for books that includes the title and author name.
 class Book {
-    constructor(title, author, year) {
+    constructor(title, author) {
         this.title = title;
         this.author = author;
-        this.year = year;
-
     }
+   
     describeBook(){
-        // 
-        return `${title} was written by ${author} and published in ${year}.`; 
-    }
+        //Tells you about the book. 
+        return `${title} was written by ${author}.`; 
+   }
 }
-
-class Fiction {
-    constructor(bookOfFiction){
-       this.bookOfFiction = bookOfFiction;
-       this.ficbooks = [];
-
+//Define a class to whom the books belong.
+class Person {
+    constructor(name) {
+        this.name = name;
+        this.books = [];
     }
-    addFictionBook(ficbook){
-        if (ficbook instanceof Book) {
-            this.ficbooks.push(ficbook);
+
+    addaBook(book) {
+        if (book instanceof Book) {
+            this.books.push(book);   
         } else {
-            throw new Error(`You can only add an instance of Book. 
-              Argument is not a book: ${ficbook}`);
+            throw new Error(`You can only add an instance of Book. Argument is not a book: ${book} `);
         }
-    } 
-    
+    }
     describe(){
-        return `${this.bookOfFiction} is a work of fiction.`;
-    } 
+        return `${this.name} has ${this.books.length} books.`;
+    }
 }
 
-class Nonfiction {
-    constructor(bookOfNonfiction){
-        this.bookOfNonfiction = bookOfNonfiction;
-        this.nonficbooks = [];
- 
-     }
-     addNonfictionBook(nonficbook){
-         if (nonficbook instanceof Book) {
-             this.nonficbooks.push(ficbook);
-         } else {
-             throw new Error(`You can only add an instance of Book. 
-               Argument is not a book: ${book}`);
-     
-         }
-     } 
-     describe(){
-        return `${this.nonficbook} is a work of nonfiction.`;
-     } 
-}
-
+// Where you can choose a person's book collection and add and remove books from the collection.
 class Menu {
-
-
-    start() { // start of the menu application
+    constructor() {
+        this.collection = [];
+        this.selctedCollection = null;
+        }
+   
+    start() { // start of the menu application 
         let selection = this.showMainMenuOptions(); 
         while (selection != 0) {
         switch(selection) {
         case '1' :
-        this.showFictionMenuOptions();
+        this.createCollection();
         break;
         case '2' :
-        this.showNonfictionMenuOptions();
+        this.viewCollection();
         break;
         case '3' :
-        this.viewAllBooks();
+        this.deleteCollection();
         break;
+        case '4' :
+        this.displayCollections();
+        break; 
         default:
         selection = 0;
         }
@@ -78,80 +62,90 @@ class Menu {
         }
     showMainMenuOptions() {
         return prompt(`
-            0) exit
-            1) Fiction Books
-            2) Nonfiction Books
-            3) View All Books
+            0) Exit
+            1) Create a Collection
+            2) View a Collection
+            3) Delete a Collection
+            4) View All Collections
             `);
             }
-
-    showFictionMenuOptions() {
+    
+    showCollectionMenuOptions(collectionInfo) {
         return prompt(`
             0) Back
             1) Add a New Book
-            2) Delete a Book
-            3) View Books
-            -----------------
-            FICTION
+            2) Delete a Book  
+            ------------------
+            ${collectionInfo}
             `);
     }
-    showFiction() {
-        let selection1 = this.showFictionMenuOptions();
-        switch (selection1) {
-            case '0' :
-            this.showMainMenuOptions();
-            break;
-            case '1' :
-            this.addFicBook();
-            break;
-            case '2' :
-            this.deleteFicBook();
-            break;
-            case '3' :
-            this.viewFicBooks();
-            break;
-            default:
-            selection1 = 0;
+    
+    displayCollections() {
+        let collectionString = '';
+        for (let i = 0; i < this.collection.length; i++){
+            collectionString += i+ ') ' + this.collection[i].name + '\n';
         }
+        alert(collectionString);
     }
 
-    addFicBook() {
+    createCollection(){
+        let name = prompt(`Enter name for new team: `); 
+        this.collection.push(new Person(name));
+    }
+
+    viewCollection(){
+        let index = prompt("Enter the index of the person's collection that you want to view:");
+        if (index > -1 && index < this.collection[index]) {
+            this.selctedCollection = this.collection[index];
+            let description = 'This Collection belongs to: ' + this.selctedCollection.name + '\n ';
+            for (let i = 0; i < this.selctedCollection.books.length; i++) {
+                description += i + ') ' + this.selctedCollection.books[i].describe() + '\n';
+            }
+        }
+        let selection1 = this.showCollectionMenuOptions(collectionInfo);
+            switch(selection1) {
+                case '1' : 
+                this.addBook();
+                break;
+                case '2' :
+                this.deleteBook();
+                break;
+            } 
+    }
+    //Add a boook to the selected person's collection
+    addBook() {
         let title = prompt('Enter the title of the book: ');
-        let author = prompt('Enter the authorof the book: ');
-        let year = prompt('Enter the year the book was published: ')
-        this.ficbooks.addFictionBook(new Book(title, author, year));
+        let author = prompt('Enter the name of the author: ');
+        this.selctedCollection(new Book(title, author));
+    }
+    //Delete a book from the selected person's collection.
+    deleteBook() {
+        let index = prompt('Enter the index of the books that you wish to delete: ');
+        if (index > -1 && index < this.selectedCollection.books.length) { 
+            this.selectedCollection.books.splice(index,1);
     }
 
-    viewFicBooks() {
+    //View all of the books in all of the collections.
+    viewAllBooks() {
         let booksStrings = ''; 
-        for (let i = 0; i < this.ficbooks.length; i++) {
-        booksStrings += i+ ') ' + this.ficbooks[i] + '\n';
+        for (let i = 0; i < this.books.length; i++) {
+        booksStrings += i+ ') ' + this.books[i] + '\n';
         }
         alert(booksString);
         }
 
-    showNonfictionMenuOptions() {
-        return prompt(`
-            0) Back
-            1) Add a new Book
-            2) Delete a Book
-            3) View Books
-            -----------------
-            NONFICTION
-            `);
+    //Delete a person's book collection. 
+    deleteCollection() {
+        let index = prompt('Enter the index of person whose collection you wish to delete: ');
+        if (index > -1 && index < this.teams.length) {
+            this.collection.splice(index,1);
     }
-  
-    viewNonfictionBooks() {
-        let booksStrings = ''; 
-        for (let i = 0; i < this.nonficbooks.length; i++) {
-        booksStrings += i+ ') ' + this.nonficbook[i] + '\n';
-        }
-        alert(booksStrings);
-        }
+    
+    }
    
 }
 
-
-
 let menu = new Menu();
 menu.start();
+
+
